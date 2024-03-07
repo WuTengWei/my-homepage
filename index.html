@@ -1,11 +1,10 @@
-<!doctype html>
 <!DOCTYPE html>
 <html>
 <head>
     <title>拍照上传照片</title>
 </head>
 <body>
-    <input type="file" accept="image/*" capture="camera" id="photoInput">
+    <input type="file" accept="image/*" id="photoInput">
     <button id="uploadButton">上传照片</button>
     
     <script>
@@ -41,7 +40,42 @@
                 alert('请先拍照或选择照片');
             }
         });
+        
+        // 请求相机权限
+        function requestCameraPermission() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // 用户已授予相机权限
+                })
+                .catch(function(error) {
+                    // 用户未授予相机权限或发生错误
+                    console.error('Error:', error);
+                    // 显示权限提示信息
+                    alert('请在设置中允许访问相机');
+                });
+        }
+        
+        // 检查相机权限并触发拍照功能
+        function checkCameraPermissionAndCapture() {
+            navigator.permissions.query({ name: 'camera' })
+                .then(function(permissionStatus) {
+                    if (permissionStatus.state == 'granted') {
+                        // 已授予相机权限，触发拍照
+                        photoInput.click();
+                    } else if (permissionStatus.state == 'prompt') {
+                        // 尚未决定相机权限，请求权限
+                        requestCameraPermission();
+                    } else {
+                        // 拒绝了相机权限，显示权限提示信息
+                        alert('请在设置中允许访问相机');
+                    }
+                });
+        }
+        
+        // 点击按钮时检查相机权限并触发拍照
+        uploadButton.addEventListener('click', function() {
+            checkCameraPermissionAndCapture();
+        });
     </script>
 </body>
 </html>
-

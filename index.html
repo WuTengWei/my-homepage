@@ -1,15 +1,47 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
-		<meta property="og:type"               content="article" />
-		<meta property="og:title"              content="When Great Minds Don’t Think Alike" />
-		<meta property="og:description"        content="How much does culture influence creative thinking?" />
-		<meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
-	</head>
-	<body>
-		<script>
-			window.location.href= 'https://m-dev2.jikeint.com/share/square/302?snat=CN&lang=en-US&invitationCode=66838717'
-		</script>
-	</body>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>拍照上传照片</title>
+</head>
+<body>
+    <input type="file" accept="image/*" capture="camera" id="photoInput">
+    <button id="uploadButton">上传照片</button>
+    
+    <script>
+        const photoInput = document.getElementById('photoInput');
+        const uploadButton = document.getElementById('uploadButton');
+        
+        let selectedPhoto = null;
+
+        photoInput.addEventListener('change', function() {
+            selectedPhoto = this.files[0];
+        });
+        
+        uploadButton.addEventListener('click', function() {
+            if (selectedPhoto) {
+                const formData = new FormData();
+                formData.append('photo', selectedPhoto);
+
+                fetch('https://example.com/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('照片上传成功！');
+                    } else {
+                        alert('照片上传失败');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('请先拍照或选择照片');
+            }
+        });
+    </script>
+</body>
 </html>
+

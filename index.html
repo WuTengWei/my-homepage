@@ -1,81 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>拍照上传照片</title>
+    <title>Document</title>
 </head>
 <body>
-    <input type="file" accept="image/*" id="photoInput">
-    <button id="uploadButton">上传照片</button>
-    
-    <script>
-        const photoInput = document.getElementById('photoInput');
-        const uploadButton = document.getElementById('uploadButton');
-        
-        let selectedPhoto = null;
-
-        photoInput.addEventListener('change', function() {
-            selectedPhoto = this.files[0];
-        });
-        
-        uploadButton.addEventListener('click', function() {
-            if (selectedPhoto) {
-                const formData = new FormData();
-                formData.append('photo', selectedPhoto);
-
-                fetch('https://example.com/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('照片上传成功！');
-                    } else {
-                        alert('照片上传失败');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            } else {
-                alert('请先拍照或选择照片');
-            }
-        });
-        
-        // 请求相机权限
-        function requestCameraPermission() {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    // 用户已授予相机权限
-                })
-                .catch(function(error) {
-                    // 用户未授予相机权限或发生错误
-                    console.error('Error:', error);
-                    // 显示权限提示信息
-                    alert('请在设置中允许访问相机');
-                });
-        }
-        
-        // 检查相机权限并触发拍照功能
-        function checkCameraPermissionAndCapture() {
-            navigator.permissions.query({ name: 'camera' })
-                .then(function(permissionStatus) {
-                    if (permissionStatus.state == 'granted') {
-                        // 已授予相机权限，触发拍照
-                        photoInput.click();
-                    } else if (permissionStatus.state == 'prompt') {
-                        // 尚未决定相机权限，请求权限
-                        requestCameraPermission();
-                    } else {
-                        // 拒绝了相机权限，显示权限提示信息
-                        alert('请在设置中允许访问相机');
-                    }
-                });
-        }
-        
-        // 点击按钮时检查相机权限并触发拍照
-        uploadButton.addEventListener('click', function() {
-            checkCameraPermissionAndCapture();
-        });
-    </script>
+    <a href="https://www.facebook.com/sharer.php?u=https://www.google.com">facebook share</a>
 </body>
-</html>
+</html> 
